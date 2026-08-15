@@ -1,0 +1,53 @@
+name: 📝 Add Pending Task
+
+on:
+  workflow_dispatch:
+    inputs:
+      subject:
+        description: 'Select the Subject'
+        required: true
+        type: choice
+        options:
+          - "Computer Networks (CN)"
+          - "CN Practical (S4-CN)"
+          - "CEP Practical (S4)"
+          - "Responsible Use of Tech in Animation (RUTA-L)"
+          - "Responsible Use of Tech in Animation (RUTA-P"
+          - "Finishing School Training (FST)"
+          - "Object Oriented Concepts (OOC)"
+          - "OOC Practical (S4)" 
+          - "Open Elective Course (OEC)"
+          - "Digital Electronics (MDM-1)"
+          - "Discrete Mathematical Structures (DMS)"
+          - "Liberal Learning Courses (LLC)"
+          - "Other"
+      task_description:
+        description: 'What is the pending homework/test? (e.g., CN ISE, Assignment 2)'
+        required: true
+        type: string
+
+jobs:
+  add_task:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Run Add Task Script
+        env:
+          SUBJECT: ${{ github.event.inputs.subject }}
+          TASK_DESC: ${{ github.event.inputs.task_description }}
+        run: python add_task.py
+        
+      - name: Commit and Push tasks.json
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add tasks.json
+          git commit -m "📝 Added new task for ${{ github.event.inputs.subject }}" || echo "No changes to commit"
+          git push

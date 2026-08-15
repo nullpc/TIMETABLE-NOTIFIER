@@ -1,0 +1,29 @@
+{
+    "Monday": [
+        {
+            "time": "09:00 AM - 11:00 AM",
+            "subject": "Computer Science Practical (CS-P)",
+            "faculty": "Prof. Alan Turing",
+            "room": "Lab 1"
+        },
+        {
+            "time": "11:00 AM - 12:00 PM",
+            "subject": "Lunch Break",
+            "faculty": "-",
+            "room": "-"
+        }
+    ],
+    "Tuesday": [
+        {
+            "time": "10:00 AM - 11:00 AM",
+            "subject": "Database Management (DBMS)",
+            "faculty": "Dr. Grace Hopper",
+            "room": "Lecture Hall A"
+        }
+    ],
+    "Wednesday": [],
+    "Thursday": [],
+    "Friday": [],
+    "Saturday": [],
+    "Sunday": []
+}

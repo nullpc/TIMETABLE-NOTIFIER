@@ -1,0 +1,34 @@
+name: ✅ Complete Task
+
+on:
+  workflow_dispatch:
+    inputs:
+      task_query:
+        description: 'Enter Task ID (e.g., 1) OR a word from the task (e.g., ISE)'
+        required: true
+        type: string
+
+jobs:
+  complete:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Run Completion Script
+        env:
+          TASK_QUERY: ${{ github.event.inputs.task_query }}
+        run: python complete_task.py
+        
+      - name: Commit and Push
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add tasks.json
+          git commit -m "✅ Task completed via mobile" || echo "No changes to commit"
+          git push
